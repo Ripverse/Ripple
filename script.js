@@ -279,17 +279,24 @@ if(newPostBtn){
   });
 }
 
-// Like button toggle
+// Like button toggle + pop animation
 document.querySelectorAll(".like-btn").forEach(btn => {
   btn.addEventListener("click", function(){
     const countSpan = this.querySelector(".like-count");
     let count = parseInt(countSpan.textContent);
+
     if(this.classList.contains("liked")){
       this.classList.remove("liked");
       countSpan.textContent = count - 1;
     } else {
       this.classList.add("liked");
       countSpan.textContent = count + 1;
+
+      // Add pop animation
+      this.classList.add("like-pop");
+      setTimeout(() => {
+        this.classList.remove("like-pop");
+      }, 300);
     }
   });
 });
