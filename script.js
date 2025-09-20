@@ -77,49 +77,6 @@ rippleButtons.forEach(button => {
 });
 
 // ========================
-// Like Buttons with pop animation
-// ========================
-const likeButtons = document.querySelectorAll(".like-btn");
-
-likeButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    let text = btn.innerText; // e.g., "❤️ 12"
-    let parts = text.split(" ");
-    let count = parseInt(parts[1]) || 0;
-    count++;
-    btn.innerText = `❤️ ${count}`;
-
-    // Add pop animation
-    btn.classList.add("like-pop");
-    setTimeout(() => {
-      btn.classList.remove("like-pop");
-    }, 300);
-  });
-});
-
-// ========================
-// Share Buttons
-// ========================
-const shareButtons = document.querySelectorAll(".share-btn");
-
-shareButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const postCard = btn.closest(".post-card");
-    const content = postCard.querySelector(".post-content").innerText;
-
-    // Copy post content to clipboard
-    navigator.clipboard.writeText(content).then(() => {
-      btn.innerText = "Copied!";
-      setTimeout(() => {
-        btn.innerText = "Share";
-      }, 1500);
-    }).catch(err => {
-      console.error("Failed to copy: ", err);
-    });
-  });
-});
-
-// ========================
 // Like Buttons with Toggle
 // ========================
 const likeButtons = document.querySelectorAll(".like-btn");
@@ -147,5 +104,27 @@ likeButtons.forEach(btn => {
     setTimeout(() => {
       btn.classList.remove("like-pop");
     }, 300);
+  });
+});
+
+// ========================
+// Share Buttons
+// ========================
+const shareButtons = document.querySelectorAll(".share-btn");
+
+shareButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const postCard = btn.closest(".post-card");
+    const content = postCard.querySelector(".post-content").innerText;
+
+    // Copy post content to clipboard
+    navigator.clipboard.writeText(content).then(() => {
+      btn.innerText = "Copied!";
+      setTimeout(() => {
+        btn.innerText = "Share";
+      }, 1500);
+    }).catch(err => {
+      console.error("Failed to copy: ", err);
+    });
   });
 });
