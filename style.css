@@ -5,6 +5,54 @@ body {
   overflow-x:hidden;
   position: relative;
 }
+/* Starry background */
+.stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: -1;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 3s infinite alternate;
+}
+@keyframes twinkle {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+/* Subtle moving wave overlay */
+.wave-bg {
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 70%);
+  animation: waveMove 20s linear infinite;
+  z-index: -1;
+}
+@keyframes waveMove {
+  0% { transform: rotate(0deg) translateX(0); }
+  50% { transform: rotate(20deg) translateX(20px); }
+  100% { transform: rotate(0deg) translateX(0); }
+}
+
+/* Glow on feature cards hover */
+.feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 20px #00c6ff, 0 0 30px #4dd0e1;
+}
+
 
 /* Starry background */
 .stars {
