@@ -120,12 +120,12 @@ shareButtons.forEach(btn => {
 });
 
 // ========================
-// Like Buttons with toggle
+// Like Buttons with Toggle
 // ========================
 const likeButtons = document.querySelectorAll(".like-btn");
 
 likeButtons.forEach(btn => {
-  let liked = false; // tracks if user has liked
+  let liked = false; // Tracks if the user has liked
 
   btn.addEventListener("click", () => {
     let text = btn.innerText; // e.g., "❤️ 12"
@@ -133,12 +133,12 @@ likeButtons.forEach(btn => {
     let count = parseInt(parts[1]) || 0;
 
     if (!liked) {
-      count++;        // increment count
-      liked = true;   // mark as liked
+      count++;        // Increment count
+      liked = true;   // Mark as liked
       btn.classList.add("like-pop");
     } else {
-      count--;        // decrement count
-      liked = false;  // unliked
+      count--;        // Decrement count
+      liked = false;  // Mark as unliked
       btn.classList.add("like-pop");
     }
 
