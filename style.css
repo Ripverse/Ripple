@@ -188,11 +188,37 @@ footer {
   padding: 0.8rem 1.5rem;
   border-radius: 30px;
   border: none;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-  color: white;
   font-weight: bold;
   cursor: pointer;
+  margin: 0.5rem auto;
+  width: 80%;
 }
+
+/* Gradient button (Email) */
+.modal-content .submit-btn {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: white;
+}
+
+/* Google button */
+.modal-content .google-btn {
+  background: white;
+  color: #333;
+  border: 1px solid #ddd;
+}
+.modal-content .google-btn:hover {
+  background: #f5f5f5;
+}
+
+/* Apple button */
+.modal-content .apple-btn {
+  background: black;
+  color: white;
+}
+.modal-content .apple-btn:hover {
+  background: #333;
+}
+
 .close {
   position: absolute;
   top: 1rem;
