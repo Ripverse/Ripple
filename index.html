@@ -19,8 +19,10 @@
       <a href="#features">Features</a>
       <a href="#about">About</a>
       <a href="#signup">Join</a>
-      <a href="#community" class="placeholder-btn">Community</a>
-      <a href="#profile" class="placeholder-btn">Profile</a>
+      <a href="#community">Community</a>
+      <a href="#profile">Profile</a>
+      <!-- Dark/Light Theme Toggle -->
+      <a href="#" id="theme-toggle">🌙</a>
     </nav>
   </header>
 
@@ -52,7 +54,7 @@
     <h2>Join Ripple</h2>
     <p>Post, connect, and find your people.</p>
     <div class="join-buttons">
-      <button class="submit-btn ripple">Sign up with Email</button>
+      <button class="submit-btn ripple" id="open-signup">Sign up with Email</button>
       <button class="google-btn ripple">Continue with Google</button>
       <button class="apple-btn ripple">Continue with Apple</button>
     </div>
@@ -79,7 +81,7 @@
       </div>
       <p class="post-content">Just finished a new digital painting! Feeling inspired 🎨✨</p>
       <div class="post-actions">
-        <button class="like-btn">❤️ 12</button>
+        <button class="like-btn">❤️ <span class="like-count">12</span></button>
         <button class="share-btn">Share</button>
       </div>
     </div>
@@ -94,7 +96,7 @@
       </div>
       <p class="post-content">Listening to some chill beats and vibing 🎶✨</p>
       <div class="post-actions">
-        <button class="like-btn">❤️ 8</button>
+        <button class="like-btn">❤️ <span class="like-count">8</span></button>
         <button class="share-btn">Share</button>
       </div>
     </div>
@@ -109,7 +111,7 @@
       </div>
       <p class="post-content">Anyone else love stargazing at night? 🌟🌙</p>
       <div class="post-actions">
-        <button class="like-btn">❤️ 20</button>
+        <button class="like-btn">❤️ <span class="like-count">20</span></button>
         <button class="share-btn">Share</button>
       </div>
     </div>
@@ -126,13 +128,13 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Join Ripple</h2>
-      <input type="text" placeholder="Username">
-      <input type="email" placeholder="Email">
-      <input type="password" placeholder="Password">
+      <input type="text" id="username" placeholder="Username">
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
       <button class="submit-btn ripple">Sign up with Email</button>
       <p style="margin:1rem 0; font-size:0.9rem;">or</p>
-      <button class="submit-btn ripple">Continue with Google</button>
-      <button class="submit-btn ripple">Continue with Apple</button>
+      <button class="google-btn ripple">Continue with Google</button>
+      <button class="apple-btn ripple">Continue with Apple</button>
     </div>
   </div>
 
