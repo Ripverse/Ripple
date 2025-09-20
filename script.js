@@ -248,3 +248,49 @@ if (starsContainer) {
   }
 }
 
+// Stories Scroll (optional: auto-scroll)
+const storiesWrapper = document.querySelector(".stories-wrapper");
+if(storiesWrapper) {
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  storiesWrapper.addEventListener("mousedown", (e) => {
+    isDown = true;
+    startX = e.pageX - storiesWrapper.offsetLeft;
+    scrollLeft = storiesWrapper.scrollLeft;
+  });
+  storiesWrapper.addEventListener("mouseleave", () => isDown = false);
+  storiesWrapper.addEventListener("mouseup", () => isDown = false);
+  storiesWrapper.addEventListener("mousemove", (e) => {
+    if(!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - storiesWrapper.offsetLeft;
+    const walk = (x - startX) * 2;
+    storiesWrapper.scrollLeft = scrollLeft - walk;
+  });
+}
+
+// Floating post button click
+const newPostBtn = document.getElementById("new-post-btn");
+if(newPostBtn){
+  newPostBtn.addEventListener("click", () => {
+    alert("✨ Feature coming soon! Post your vibes here!");
+  });
+}
+
+// Like button toggle
+document.querySelectorAll(".like-btn").forEach(btn => {
+  btn.addEventListener("click", function(){
+    const countSpan = this.querySelector(".like-count");
+    let count = parseInt(countSpan.textContent);
+    if(this.classList.contains("liked")){
+      this.classList.remove("liked");
+      countSpan.textContent = count - 1;
+    } else {
+      this.classList.add("liked");
+      countSpan.textContent = count + 1;
+    }
+  });
+});
+

@@ -504,3 +504,120 @@ body.dark-theme .post-actions button {
   50% { opacity: 1; }
   100% { opacity: 0.3; }
 }
+
+/* ========================
+   Stories Section
+======================== */
+.stories-section {
+  display: flex;
+  overflow-x: auto;
+  padding: 1rem;
+  gap: 1rem;
+}
+.stories-wrapper {
+  display: flex;
+  gap: 1rem;
+}
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+.story img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #00c6ff;
+  object-fit: cover;
+  margin-bottom: 0.3rem;
+  transition: transform 0.3s;
+}
+.story:hover img {
+  transform: scale(1.1);
+}
+
+/* ========================
+   Feed Section
+======================== */
+.feed-section {
+  padding: 2rem;
+}
+.post-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px #00c6ff;
+}
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.post-header .avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 0.8rem;
+}
+.post-media img, .post-media video {
+  width: 100%;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+}
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.comment-btn, .share-btn {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+/* ========================
+   Floating Action Button
+======================== */
+.floating-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  font-size: 2rem;
+  background: linear-gradient(90deg,#00c6ff,#0072ff);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 15px #00c6ff;
+}
+
+/* ========================
+   Bottom Navigation
+======================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.8rem 0;
+  backdrop-filter: blur(5px);
+}
+.bottom-nav a {
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
