@@ -109,10 +109,7 @@ document.querySelectorAll("button").forEach(button => {
 // ========================
 document.querySelectorAll(".like-btn").forEach(btn => {
   btn.addEventListener("click", function() {
-    let countSpan = this.querySelector(".like-count");
-
-    if (!countSpan) return; // safety
-
+    const countSpan = this.querySelector(".like-count");
     let count = parseInt(countSpan.textContent);
 
     if (this.classList.contains("liked")) {
@@ -121,10 +118,9 @@ document.querySelectorAll(".like-btn").forEach(btn => {
     } else {
       this.classList.add("liked");
       countSpan.textContent = count + 1;
+      this.classList.add("like-pop");
+      setTimeout(() => this.classList.remove("like-pop"), 300);
     }
-
-    this.classList.add("like-pop");
-    setTimeout(() => this.classList.remove("like-pop"), 300);
   });
 });
 
@@ -225,3 +221,30 @@ document.querySelectorAll(".share-btn").forEach(btn => {
     }
   });
 });
+
+// Stars Background
+const starsContainer = document.getElementById("stars");
+if (starsContainer) {
+  // Clear existing stars if any
+  starsContainer.innerHTML = "";
+
+  for (let i = 0; i < 100; i++) {
+    let star = document.createElement("div");
+    star.classList.add("star");
+
+    // Random position
+    star.style.top = Math.random() * 100 + "vh";
+    star.style.left = Math.random() * 100 + "vw";
+
+    // Random size (1-4px)
+    const size = Math.random() * 3 + 1;
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+
+    // Random twinkle speed
+    star.style.animationDuration = 1 + Math.random() * 3 + "s";
+
+    starsContainer.appendChild(star);
+  }
+}
+
