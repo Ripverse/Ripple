@@ -118,3 +118,34 @@ shareButtons.forEach(btn => {
     });
   });
 });
+
+// ========================
+// Like Buttons with toggle
+// ========================
+const likeButtons = document.querySelectorAll(".like-btn");
+
+likeButtons.forEach(btn => {
+  let liked = false; // tracks if user has liked
+
+  btn.addEventListener("click", () => {
+    let text = btn.innerText; // e.g., "❤️ 12"
+    let parts = text.split(" ");
+    let count = parseInt(parts[1]) || 0;
+
+    if (!liked) {
+      count++;        // increment count
+      liked = true;   // mark as liked
+      btn.classList.add("like-pop");
+    } else {
+      count--;        // decrement count
+      liked = false;  // unliked
+      btn.classList.add("like-pop");
+    }
+
+    btn.innerText = `❤️ ${count}`;
+
+    setTimeout(() => {
+      btn.classList.remove("like-pop");
+    }, 300);
+  });
+});
