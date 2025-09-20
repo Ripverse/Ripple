@@ -270,3 +270,45 @@ footer {
   50% { transform: rotate(20deg) translateX(20px); }
   100% { transform: rotate(0deg) translateX(0); }
 }
+
+/* ========================
+   Join Ripple Section
+======================== */
+.join-section {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 4rem 0;
+  border-radius: 20px;
+  animation: floaty 6s ease-in-out infinite;
+}
+.join-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #00c6ff;
+}
+.join-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+.join-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.join-buttons button {
+  width: 250px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.join-buttons button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00c6ff;
+}
