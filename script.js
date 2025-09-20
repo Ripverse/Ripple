@@ -96,22 +96,23 @@ if(newPostBtn){
 }
 
 // ========================
-// Like Buttons with Toggle & Animation
+// Like Button Toggle + Pop Animation (Fixed)
 // ========================
-document.querySelectorAll(".like-btn").forEach(btn => {
-  btn.addEventListener("click", function(){
-    const countSpan = this.querySelector(".like-count");
-    let count = parseInt(countSpan.textContent);
+const likeButtons = document.querySelectorAll('.like-btn');
 
-    if(this.classList.contains("liked")){
-      this.classList.remove("liked");
-      countSpan.textContent = count - 1;
-    } else {
-      this.classList.add("liked");
-      countSpan.textContent = count + 1;
-      this.classList.add("like-pop");
-      setTimeout(() => this.classList.remove("like-pop"), 300);
-    }
+likeButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Toggle the liked state
+    btn.classList.toggle('liked');
+    
+    // Remove the pop class if it exists to restart the animation
+    btn.classList.remove('like-pop');
+    
+    // Trigger reflow to reset animation
+    void btn.offsetWidth;
+    
+    // Add the pop class again
+    btn.classList.add('like-pop');
   });
 });
 
