@@ -102,6 +102,15 @@ const likeButtons = document.querySelectorAll('.like-btn');
 
 likeButtons.forEach(btn => {
   btn.addEventListener('click', () => {
+    const countSpan = btn.querySelector('.like-count');
+    let count = parseInt(countSpan.textContent);
+
+    if(btn.classList.contains('liked')){
+      countSpan.textContent = count - 1;
+    } else {
+      countSpan.textContent = count + 1;
+    }
+
     // Toggle the liked state
     btn.classList.toggle('liked');
     
