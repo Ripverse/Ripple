@@ -20,82 +20,6 @@
       <a href="#about">About</a>
       <a href="#signup">Join</a>
       <a href="#community">Community</a>
-      <a href="#profile">Profile</a>
-      <a href="#" id="theme-toggle">🌙</a>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <h1>Make waves. Share your world.</h1>
-    <p>A space to post, connect, and vibe.</p>
-    <a href="#signup" class="cta-btn ripple" id="hero-signup-btn">Get Started</a>
-    <a href="#" class="cta-btn ripple" id="hero-login-btn">Log In</a>
-  </section>
-
-  <!-- Floating Post Button -->
-  <button id="new-post-btn" class="floating-btn">➕</button>
-
-  <!-- Bottom Nav -->
-  <nav class="bottom-nav">
-    <a href="#home">🏠</a>
-    <a href="#community">💬</a>
-    <a href="#profile">👤</a>
-  </nav>
-
-  <!-- Features Section -->
-  <section id="features" class="features">
-    <div class="feature-card">
-      <h2>🌌 Cosmic Vibe</h2>
-      <p>An aesthetic that matches your energy.</p>
-    </div>
-    <div class="feature-card">
-      <h2>🌊 Ripple Effects</h2>
-      <p>Every post makes waves.</p>
-    </div>
-    <div class="feature-card">
-      <h2>💫 Real Connections</h2>
-      <p>Meet people who vibe like you.</p>
-    </div>
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ripple</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* You can move this to style.css if you want */
-    body { font-family: Arial, sans-serif; background: linear-gradient(#1a1a2e, #162447); color: #fff; margin:0; padding:0;}
-    .navbar { display:flex; justify-content: space-between; align-items:center; padding:1rem; background:rgba(0,0,0,0.7);}
-    .navbar a { color:#fff; margin-left:1rem; text-decoration:none;}
-    .hero { text-align:center; padding:4rem 2rem;}
-    .cta-btn { background:#00bfff; color:#fff; padding:0.8rem 2rem; border:none; border-radius:8px; cursor:pointer;}
-    .features, .join-section, .about, .community-section { padding:2rem;}
-    .feature-card { background: rgba(0,0,0,0.6); margin:1rem; padding:1rem; border-radius:12px;}
-    .community-section .post-card { background: rgba(0,0,0,0.6); margin:1rem 0; padding:1rem; border-radius:12px;}
-    .post-header { display:flex; align-items:center;}
-    .avatar { width:50px; height:50px; border-radius:50%; background:#555; margin-right:1rem;}
-    .post-actions button { margin-right:0.5rem; cursor:pointer; border:none; background:none; color:#fff; }
-    .floating-btn { position:fixed; bottom:70px; right:20px; background:#00bfff; color:#fff; border:none; padding:1rem; border-radius:50%; font-size:1.5rem; cursor:pointer;}
-    .bottom-nav { position:fixed; bottom:0; width:100%; display:flex; justify-content:space-around; background:rgba(0,0,0,0.8); padding:0.5rem 0;}
-    .bottom-nav a { color:#fff; font-size:1.5rem; }
-  </style>
-</head>
-<body>
-  <!-- Cosmic + Wave Backgrounds -->
-  <div class="stars" id="stars"></div>
-  <div class="wave-bg"></div>
-
-  <!-- Navigation -->
-  <header class="navbar">
-    <div class="logo">🌊 Ripple</div>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#features">Features</a>
-      <a href="#about">About</a>
-      <a href="#signup">Join</a>
-      <a href="#community">Community</a>
       <a href="#" id="theme-toggle">🌙</a>
     </nav>
   </header>
@@ -138,7 +62,7 @@
     <p>Post, connect, and find your people.</p>
     <div class="join-buttons">
       <button class="submit-btn ripple" id="open-signup">Sign up with Email</button>
-      <button class="google-btn ripple">Continue with Google</button>
+      <button class="google-btn ripple" id="google-login">Continue with Google</button>
       <button class="apple-btn ripple">Continue with Apple</button>
     </div>
   </section>
@@ -153,7 +77,51 @@
   <section id="community" class="community-section">
     <h2>Community</h2>
     <div id="community-feed">
-      <!-- Feed posts will be dynamically inserted here -->
+      <!-- Community posts will be inserted here dynamically -->
+      <div class="post-card">
+        <div class="post-header">
+          <div class="avatar"></div>
+          <div class="user-info">
+            <span class="username">Eryn</span>
+            <span class="timestamp">2h ago</span>
+          </div>
+        </div>
+        <p class="post-content">Just finished a new digital painting! Feeling inspired 🎨✨</p>
+        <div class="post-actions">
+          <button class="like-btn">❤️ <span class="like-count">12</span></button>
+          <button class="share-btn">Share</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-header">
+          <div class="avatar"></div>
+          <div class="user-info">
+            <span class="username">Rick</span>
+            <span class="timestamp">5h ago</span>
+          </div>
+        </div>
+        <p class="post-content">Listening to some chill beats and vibing 🎶✨</p>
+        <div class="post-actions">
+          <button class="like-btn">❤️ <span class="like-count">8</span></button>
+          <button class="share-btn">Share</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-header">
+          <div class="avatar"></div>
+          <div class="user-info">
+            <span class="username">Mia</span>
+            <span class="timestamp">1d ago</span>
+          </div>
+        </div>
+        <p class="post-content">Anyone else love stargazing at night? 🌟🌙</p>
+        <div class="post-actions">
+          <button class="like-btn">❤️ <span class="like-count">20</span></button>
+          <button class="share-btn">Share</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -165,9 +133,9 @@
       <input type="text" id="username" placeholder="Username">
       <input type="email" id="email" placeholder="Email">
       <input type="password" id="password" placeholder="Password">
-      <button class="submit-btn ripple" id="signup-btn">Sign up with Email</button>
+      <button class="submit-btn ripple" id="signup-submit">Sign up with Email</button>
       <p style="margin:1rem 0; font-size:0.9rem;">or</p>
-      <button class="google-btn ripple">Continue with Google</button>
+      <button class="google-btn ripple" id="signup-google">Continue with Google</button>
       <button class="apple-btn ripple">Continue with Apple</button>
     </div>
   </div>
@@ -177,17 +145,17 @@
     <p>© 2025 Ripple. Your world, your ripple.</p>
   </footer>
 
-  <!-- Firebase + JS -->
+  <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDEbREe4_1AJcCCNlXfctGYrNUuF3vdLGQ",
       authDomain: "ripple-7c65c.firebaseapp.com",
       projectId: "ripple-7c65c",
-      storageBucket: "ripple-7c65c.firebasestorage.app",
+      storageBucket: "ripple-7c65c.appspot.com",
       messagingSenderId: "358332803341",
       appId: "1:358332803341:web:c95635252ed5d186aca844",
       measurementId: "G-Q482K1Z6YW"
@@ -197,57 +165,42 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Check auth state
-    onAuthStateChanged(auth, async (user) => {
-      if(user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if(!userDoc.exists()) {
-          // New user, redirect to onboarding
-          window.location.href = "onboarding.html";
-        } else {
-          // Existing user, show their profile info at top of feed
-          const data = userDoc.data();
-          const feed = document.getElementById("community-feed");
-          const userPost = document.createElement("div");
-          userPost.className = "post-card";
-          userPost.innerHTML = `
-            <div class="post-header">
-              <div class="avatar" style="background-image:url('${data.profilePicture || ''}'); background-size:cover;"></div>
-              <div class="user-info">
-                <span class="username">${data.username}</span>
-                <span class="timestamp">Welcome!</span>
-              </div>
-            </div>
-            <p class="post-content">Interests: ${data.interests ? data.interests.join(", ") : "None selected"}</p>
-          `;
-          feed.prepend(userPost);
-        }
-      }
-    });
-
-    // Signup button functionality (Firebase Auth)
-    const signupBtn = document.getElementById("signup-btn");
+    // Email signup
+    const signupBtn = document.getElementById("signup-submit");
     signupBtn.addEventListener("click", async () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const username = document.getElementById("username").value;
 
-      if(!email || !password || !username) return alert("Fill all fields");
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        // Save username to Firestore
+        await setDoc(doc(db, "users", user.uid), { username: username, bio: "", interests: [] });
+        // Redirect to onboarding page
+        window.location.href = "onboarding.html";
+      } catch (error) {
+        alert(error.message);
+      }
+    });
 
-      import("https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js").then(({ createUserWithEmailAndPassword }) => {
-        createUserWithEmailAndPassword(auth, email, password)
-          .then(async (userCredential) => {
-            const user = userCredential.user;
-            await doc(db, "users", user.uid).set({username});
-            // Redirect to onboarding
-            window.location.href = "onboarding.html";
-          })
-          .catch(err => alert(err.message));
-      });
+    // Google signup
+    const googleBtn = document.getElementById("signup-google");
+    googleBtn.addEventListener("click", async () => {
+      const provider = new GoogleAuthProvider();
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        await setDoc(doc(db, "users", user.uid), { username: user.displayName || "", bio: "", interests: [] }, { merge: true });
+        window.location.href = "onboarding.html";
+      } catch (error) {
+        alert(error.message);
+      }
     });
   </script>
 
+  <!-- Script for ripple buttons, theme toggle, stars, etc. -->
   <script src="script.js"></script>
+
 </body>
 </html>
-
