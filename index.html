@@ -77,7 +77,6 @@
   <section id="community" class="community-section">
     <h2>Community</h2>
     <div id="community-feed">
-      <!-- Community posts will be inserted here dynamically -->
       <div class="post-card">
         <div class="post-header">
           <div class="avatar"></div>
@@ -148,7 +147,7 @@
   <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -171,13 +170,10 @@
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const username = document.getElementById("username").value;
-
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        // Save username to Firestore
         await setDoc(doc(db, "users", user.uid), { username: username, bio: "", interests: [] });
-        // Redirect to onboarding page
         window.location.href = "onboarding.html";
       } catch (error) {
         alert(error.message);
@@ -201,6 +197,5 @@
 
   <!-- Script for ripple buttons, theme toggle, stars, etc. -->
   <script src="script.js"></script>
-
 </body>
 </html>
