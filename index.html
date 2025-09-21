@@ -78,57 +78,57 @@
   <!-- Community Section -->
   <section id="community" class="community-section">
     <h2>Community</h2>
-
-    <div class="post-card">
-      <div class="post-header">
-        <div class="avatar"></div>
-        <div class="user-info">
-          <span class="username">Eryn</span>
-          <span class="timestamp">2h ago</span>
-        </div>
-      </div>
-      <p class="post-content">Just finished a new digital painting! Feeling inspired 🎨✨</p>
-      <div class="post-actions">
-        <button class="like-btn">❤️ <span class="like-count">12</span></button>
-        <button class="share-btn">Share</button>
-      </div>
-    </div>
-
-    <div class="post-card">
-      <div class="post-header">
-        <div class="avatar"></div>
-        <div class="user-info">
-          <span class="username">Rick</span>
-          <span class="timestamp">5h ago</span>
-        </div>
-      </div>
-      <p class="post-content">Listening to some chill beats and vibing 🎶✨</p>
-      <div class="post-actions">
-        <button class="like-btn">❤️ <span class="like-count">8</span></button>
-        <button class="share-btn">Share</button>
-      </div>
-    </div>
-
-    <div class="post-card">
-      <div class="post-header">
-        <div class="avatar"></div>
-        <div class="user-info">
-          <span class="username">Mia</span>
-          <span class="timestamp">1d ago</span>
-        </div>
-      </div>
-      <p class="post-content">Anyone else love stargazing at night? 🌟🌙</p>
-      <div class="post-actions">
-        <button class="like-btn">❤️ <span class="like-count">20</span></button>
-        <button class="share-btn">Share</button>
-      </div>
+    <div id="community-feed">
+      <p>Community posts will go here 🌊</p>
     </div>
   </section>
 
-  <!-- Profile Placeholder -->
-  <section id="profile" class="placeholder-section">
-    <h2>Profile (Coming Soon!)</h2>
-    <p>This is where user profiles will be.</p>
+  <!-- Profile Section -->
+  <section id="profile" class="profile-section" style="display: none;">
+    <div class="profile-header">
+      <div class="avatar big-avatar"></div>
+      <div class="profile-info">
+        <h2 id="profile-username">Your Username</h2>
+        <p id="profile-bio">Write something about yourself 🌊</p>
+        <textarea id="bio-input" placeholder="Edit your bio..." style="display:none;"></textarea>
+        <button id="edit-profile-btn" class="submit-btn ripple">Edit Bio</button>
+        <button id="save-bio-btn" class="submit-btn ripple" style="display:none;">Save Bio</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="profile-stats">
+      <div><strong id="stat-posts">0</strong><span>Posts</span></div>
+      <div><strong id="stat-followers">0</strong><span>Followers</span></div>
+      <div><strong id="stat-likes">0</strong><span>Likes</span></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="profile-tabs">
+      <button class="tab-btn active" data-tab="posts">Posts</button>
+      <button class="tab-btn" data-tab="saved">Saved</button>
+      <button class="tab-btn" data-tab="settings">Settings</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="tab-content">
+      <div class="tab-pane" id="posts">
+        <h3>Your Posts</h3>
+        <div id="user-posts">
+          <p>No posts yet. Start making waves 🌊</p>
+        </div>
+      </div>
+      <div class="tab-pane hidden" id="saved">
+        <h3>Saved Posts</h3>
+        <div id="saved-posts">
+          <p>No saved posts yet.</p>
+        </div>
+      </div>
+      <div class="tab-pane hidden" id="settings">
+        <h3>Settings</h3>
+        <button id="logout-btn" class="submit-btn ripple">Log Out</button>
+      </div>
+    </div>
   </section>
 
   <!-- Signup Modal -->
@@ -139,7 +139,7 @@
       <input type="text" id="username" placeholder="Username">
       <input type="email" id="email" placeholder="Email">
       <input type="password" id="password" placeholder="Password">
-      <button class="submit-btn ripple">Sign up with Email</button>
+      <button id="signup-btn" class="submit-btn ripple">Sign up with Email</button>
       <p style="margin:1rem 0; font-size:0.9rem;">or</p>
       <button class="google-btn ripple">Continue with Google</button>
       <button class="apple-btn ripple">Continue with Apple</button>
@@ -151,8 +151,105 @@
     <p>© 2025 Ripple. Your world, your ripple.</p>
   </footer>
 
-  <!-- JavaScript -->
-  <script src="script.js"></script>
+  <!-- Firebase + Auth + Firestore -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyDEbREe4_1AJcCCNlXfctGYrNUuF3vdLGQ",
+      authDomain: "ripple-7c65c.firebaseapp.com",
+      projectId: "ripple-7c65c",
+      storageBucket: "ripple-7c65c.firebasestorage.app",
+      messagingSenderId: "358332803341",
+      appId: "1:358332803341:web:c95635252ed5d186aca844",
+      measurementId: "G-Q482K1Z6YW"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Modal logic
+    const modal = document.getElementById("signup-modal");
+    document.getElementById("open-signup").onclick = () => modal.style.display = "block";
+    document.querySelector(".close").onclick = () => modal.style.display = "none";
+
+    // Sign up
+    document.getElementById("signup-btn").addEventListener("click", async () => {
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, "users", userCred.user.uid), {
+          username: username,
+          bio: "Welcome to Ripple 🌊",
+          posts: 0,
+          followers: 0,
+          likes: 0
+        });
+        alert("Signed up successfully!");
+        modal.style.display = "none";
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+
+    // Auth state
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        document.getElementById("profile").style.display = "block";
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          document.getElementById("profile-username").textContent = data.username;
+          document.getElementById("profile-bio").textContent = data.bio;
+          document.getElementById("stat-posts").textContent = data.posts;
+          document.getElementById("stat-followers").textContent = data.followers;
+          document.getElementById("stat-likes").textContent = data.likes;
+        }
+      } else {
+        document.getElementById("profile").style.display = "none";
+      }
+    });
+
+    // Edit bio
+    const editBtn = document.getElementById("edit-profile-btn");
+    const saveBtn = document.getElementById("save-bio-btn");
+    const bioText = document.getElementById("profile-bio");
+    const bioInput = document.getElementById("bio-input");
+
+    editBtn.addEventListener("click", () => {
+      bioInput.value = bioText.textContent;
+      bioText.style.display = "none";
+      bioInput.style.display = "block";
+      editBtn.style.display = "none";
+      saveBtn.style.display = "inline-block";
+    });
+
+    saveBtn.addEventListener("click", async () => {
+      const newBio = bioInput.value;
+      const user = auth.currentUser;
+      if (user) {
+        await setDoc(doc(db, "users", user.uid), { bio: newBio }, { merge: true });
+        bioText.textContent = newBio;
+      }
+      bioText.style.display = "block";
+      bioInput.style.display = "none";
+      editBtn.style.display = "inline-block";
+      saveBtn.style.display = "none";
+    });
+
+    // Logout
+    document.getElementById("logout-btn").addEventListener("click", async () => {
+      await signOut(auth);
+      alert("Logged out 🌌");
+    });
+  </script>
+
+  <!-- Your scripts -->
+  <script src="script.js"></script>
 </body>
 </html>
