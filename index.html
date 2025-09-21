@@ -29,7 +29,8 @@
   <section id="home" class="hero">
     <h1>Make waves. Share your world.</h1>
     <p>A space to post, connect, and vibe.</p>
-    <a href="#signup" class="cta-btn ripple">Get Started</a>
+    <a href="#signup" class="cta-btn ripple" id="hero-signup-btn">Get Started</a>
+    <a href="#" class="cta-btn ripple" id="hero-login-btn">Log In</a>
   </section>
 
   <!-- Floating Post Button -->
@@ -136,13 +137,24 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>Join Ripple</h2>
-      <input type="text" id="username" placeholder="Username">
-      <input type="email" id="email" placeholder="Email">
-      <input type="password" id="password" placeholder="Password">
+      <input type="text" id="signup-username" placeholder="Username">
+      <input type="email" id="signup-email" placeholder="Email">
+      <input type="password" id="signup-password" placeholder="Password">
       <button id="signup-btn" class="submit-btn ripple">Sign up with Email</button>
       <p style="margin:1rem 0; font-size:0.9rem;">or</p>
       <button class="google-btn ripple">Continue with Google</button>
       <button class="apple-btn ripple">Continue with Apple</button>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-login">&times;</span>
+      <h2>Log In</h2>
+      <input type="email" id="login-email" placeholder="Email">
+      <input type="password" id="login-password" placeholder="Password">
+      <button id="login-btn" class="submit-btn ripple">Log In</button>
     </div>
   </div>
 
@@ -155,7 +167,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDEbREe4_1AJcCCNlXfctGYrNUuF3vdLGQ",
@@ -171,16 +183,21 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Modal logic
-    const modal = document.getElementById("signup-modal");
-    document.getElementById("open-signup").onclick = () => modal.style.display = "block";
-    document.querySelector(".close").onclick = () => modal.style.display = "none";
+    // Modals
+    const signupModal = document.getElementById("signup-modal");
+    const loginModal = document.getElementById("login-modal");
 
-    // Sign up
+    document.getElementById("open-signup").onclick = () => signupModal.style.display = "block";
+    document.querySelector(".close").onclick = () => signupModal.style.display = "none";
+    document.getElementById("hero-signup-btn").onclick = () => signupModal.style.display = "block";
+    document.getElementById("hero-login-btn").onclick = () => loginModal.style.display = "block";
+    document.querySelector(".close-login").onclick = () => loginModal.style.display = "none";
+
+    // Sign up -> redirect to onboarding
     document.getElementById("signup-btn").addEventListener("click", async () => {
-      const username = document.getElementById("username").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      const username = document.getElementById("signup-username").value;
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
       try {
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
         await setDoc(doc(db, "users", userCred.user.uid), {
@@ -188,10 +205,40 @@
           bio: "Welcome to Ripple 🌊",
           posts: 0,
           followers: 0,
-          likes: 0
+          likes: 0,
+          following: []
         });
-        alert("Signed up successfully!");
-        modal.style.display = "none";
+
+        // Auto-follow popular accounts
+        const popularAccounts = ["popularUser1", "popularUser2", "popularUser3"];
+        for (const username of popularAccounts) {
+          await updateDoc(doc(db, "users", userCred.user.uid), {
+            following: arrayUnion(username)
+          });
+        }
+
+        // Redirect to onboarding page
+        window.location.href = "onboarding.html";
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+
+    // Login -> show welcome ripple animation
+    document.getElementById("login-btn").addEventListener("click", async () => {
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        loginModal.style.display = "none";
+
+        // Welcome animation
+        const ripple = document.createElement("div");
+        ripple.classList.add("ripple-welcome");
+        ripple.textContent = "🌊 Welcome!";
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 2000);
+
       } catch (error) {
         alert(error.message);
       }
@@ -233,7 +280,7 @@
       const newBio = bioInput.value;
       const user = auth.currentUser;
       if (user) {
-        await setDoc(doc(db, "users", user.uid), { bio: newBio }, { merge: true });
+        await updateDoc(doc(db, "users", user.uid), { bio: newBio });
         bioText.textContent = newBio;
       }
       bioText.style.display = "block";
@@ -249,7 +296,6 @@
     });
   </script>
 
-  <!-- Your scripts -->
   <script src="script.js"></script>
 </body>
 </html>

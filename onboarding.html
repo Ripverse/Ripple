@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ripple Onboarding</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#1a1a2e, #162447);
+      color: #fff;
+      text-align: center;
+      padding: 2rem;
+    }
+    .onboarding-container {
+      max-width: 500px;
+      margin: auto;
+      background: rgba(0,0,0,0.6);
+      padding: 2rem;
+      border-radius: 12px;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    input[type="text"], input[type="file"] {
+      width: 90%;
+      padding: 0.7rem;
+      margin: 0.5rem 0;
+      border-radius: 6px;
+      border: none;
+    }
+    .interests {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    .interest {
+      background: #2a2a4d;
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .interest.selected {
+      background: #00bfff;
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #00bfff;
+    }
+    .ripple-effect {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      background-color: rgba(0, 191, 255, 0.5);
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    button {
+      padding: 0.8rem 2rem;
+      margin-top: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #00bfff;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="onboarding-container">
+    <h1>Welcome to Ripple 🌊</h1>
+    <p>Let's set up your profile!</p>
+
+    <!-- Username -->
+    <input type="text" id="onboarding-username" placeholder="Choose your username">
+
+    <!-- Profile Picture -->
+    <input type="file" id="onboarding-pfp" accept="image/*">
+
+    <!-- Interests -->
+    <h3>Select your interests:</h3>
+    <div class="interests">
+      <div class="interest" data-value="Music">Music</div>
+      <div class="interest" data-value="Gaming">Gaming</div>
+      <div class="interest" data-value="Art">Art</div>
+      <div class="interest" data-value="Memes">Memes</div>
+      <div class="interest" data-value="Sports">Sports</div>
+      <div class="interest" data-value="Anime">Anime</div>
+      <div class="interest" data-value="Technology">Technology</div>
+      <div class="interest" data-value="Fashion">Fashion</div>
+    </div>
+
+    <button id="finish-onboarding">Finish Setup</button>
+  </div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+    import { getFirestore, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDEbREe4_1AJcCCNlXfctGYrNUuF3vdLGQ",
+      authDomain: "ripple-7c65c.firebaseapp.com",
+      projectId: "ripple-7c65c",
+      storageBucket: "ripple-7c65c.firebasestorage.app",
+      messagingSenderId: "358332803341",
+      appId: "1:358332803341:web:c95635252ed5d186aca844",
+      measurementId: "G-Q482K1Z6YW"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    const interestsEls = document.querySelectorAll(".interest");
+    let selectedInterests = [];
+
+    interestsEls.forEach(el => {
+      el.addEventListener("click", (e) => {
+        const value = el.dataset.value;
+        el.classList.toggle("selected");
+        if(el.classList.contains("selected")) {
+          selectedInterests.push(value);
+          createRipple(el);
+        } else {
+          selectedInterests = selectedInterests.filter(i => i !== value);
+        }
+      });
+    });
+
+    function createRipple(el) {
+      const ripple = document.createElement("span");
+      ripple.classList.add("ripple-effect");
+      const rect = el.getBoundingClientRect();
+      ripple.style.left = `${event.clientX - rect.left}px`;
+      ripple.style.top = `${event.clientY - rect.top}px`;
+      el.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+
+    document.getElementById("finish-onboarding").addEventListener("click", async () => {
+      const user = auth.currentUser;
+      const username = document.getElementById("onboarding-username").value;
+      const pfpFile = document.getElementById("onboarding-pfp").files[0];
+
+      if(!username) return alert("Please choose a username!");
+
+      let pfpURL = "";
+      if(pfpFile) {
+        const storageRef = ref(storage, `profilePictures/${user.uid}`);
+        await uploadBytes(storageRef, pfpFile);
+        pfpURL = await getDownloadURL(storageRef);
+      }
+
+      try {
+        await updateDoc(doc(db, "users", user.uid), {
+          username: username,
+          profilePicture: pfpURL,
+          interests: selectedInterests
+        });
+
+        // Auto-follow suggested accounts
+        const suggestedAccounts = ["popularUser1", "popularUser2", "popularUser3"];
+        for(const account of suggestedAccounts) {
+          await updateDoc(doc(db, "users", user.uid), {
+            following: arrayUnion(account)
+          });
+        }
+
+        alert("Profile setup complete! 🌊");
+        window.location.href = "index.html"; // redirect to main feed
+
+      } catch(err) {
+        console.error(err);
+        alert("Error saving profile. Try again.");
+      }
+    });
+
+    // Ensure user is logged in
+    onAuthStateChanged(auth, (user) => {
+      if(!user) {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+</body>
+</html>
